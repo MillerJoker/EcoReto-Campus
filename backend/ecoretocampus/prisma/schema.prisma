@@ -8,41 +8,66 @@ generator client {
 }
 
 enum Difficulty {
-  FACIL
-  MEDIO
-  DIFICIL
+  EASY
+  MEDIUM
+  HARD
 }
 
+enum StatusType {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// Modelo de Categorías
 model Category {
   id         String      @id @default(uuid())
   name       String      @unique
   challenges Challenge[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@map("categories")
+}
+
+// Modelo de Usuarios
+model User {
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password       String
+  points         Int             @default(0)
+  participations Participation[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("users")
 }
 
 model Challenge {
   id             String          @id @default(uuid())
   title          String
-  description    String          @db.Text
-  points         Int             
-  startDate      DateTime        @map("start_date")
-  endDate        DateTime        @map("end_date")
-  difficulty     Difficulty      @default(FACIL)
-  categoryId     String          @map("category_id")
-  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  description    String
+  difficulty     Difficulty      @default(EASY)
+  pointsReward   Int             @default(10)
+  categoryId     String
+  category       Category        @relation(fields: [categoryId], references: [id])
   participations Participation[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@map("challenges")
 }
 
 model Participation {
-  id          String    @id @default(uuid())
-  studentName String    @map("student_name")
-  evidenceUrl String?   @map("evidence_url")
-  status      String    @default("Pendiente")
-  challengeId String    @map("challenge_id")
-  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  id          String     @id @default(uuid())
+  imageUrl    String
+  status      StatusType @default(PENDING)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  challengeId String
+  challenge   Challenge  @relation(fields: [challengeId], references: [id])
+  createdAt   DateTime   @default(now())
 
   @@map("participations")
 }
