@@ -19,6 +19,11 @@ enum StatusType {
   REJECTED
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 // Modelo de Categorías
 model Category {
   id         String      @id @default(uuid())
@@ -36,6 +41,7 @@ model User {
   name           String
   email          String          @unique
   password       String
+  role           Role            @default(USER)
   points         Int             @default(0)
   participations Participation[]
   createdAt      DateTime        @default(now())
