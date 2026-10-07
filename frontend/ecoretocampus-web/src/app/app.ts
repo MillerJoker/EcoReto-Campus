@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { AuthComponent } from './components/auth/auth.component';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [AuthComponent],
+  standalone: true,
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
