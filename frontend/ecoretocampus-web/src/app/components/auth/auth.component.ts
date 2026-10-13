@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +17,7 @@ export class AuthComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.authForm = this.fb.group({
       name: [''], 
       email: ['', [Validators.required, Validators.email]],
@@ -44,6 +45,9 @@ export class AuthComponent {
         next: (response) => {
           this.successMessage = `${response.message} (Token guardado en localStorage)`;
           console.log('Token:', this.authService.getToken());
+          setTimeout(()=>{
+            this.router.navigate(['/dashboard']);
+          },800);
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Error al iniciar sesión';

@@ -1,0 +1,99 @@
+<div class="dashboard-container">
+  
+  <div class="main-content">
+    
+    <div class="top-bar">
+      <div class="user-badge">
+        <span class="username">{{ user?.name || 'UserP1' }}</span>
+        <span class="nv-chip">NV 0</span>
+        <span class="pts-chip">PTS {{ user?.points || 5 }}</span>
+        <button class="btn-salir-top" (click)="logout()">Salir</button>
+      </div>
+      <div class="brand-top">
+        <span class="brand-title">EcoReto Campus</span>
+        <div class="brand-logo">🌿</div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-header">
+        <div>
+          <p class="hola-texto">Hola de nuevo</p>
+          <h2 class="user-big">{{ user?.name || 'UserP1' }}</h2>
+          <p class="sub-info">1 reto cumplido · faltan 1 para nivel 1</p>
+        </div>
+        <div class="progress-stats-box">
+          <span class="puntos-box">PUNTOS <strong>5</strong></span>
+          <span class="retos-box">RETOS CUMPLIDOS <strong>1</strong></span>
+        </div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-labels">
+          <span>Nivel 0</span>
+          <span>50%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: 50%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>BUSCAR RETO</label>
+        <input type="text" placeholder="Ej: botellas, ahorra agua..." />
+      </div>
+      <div class="filter-group">
+        <label>CATEGORÍA</label>
+        <select>
+          <option>Todas</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>DIFICULTAD</label>
+        <select>
+          <option>Todas</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-buscar">Buscar</button>
+        <button class="btn-limpiar">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="challenges-grid">
+      <div class="challenge-card" *ngFor="let reto of retos">
+        <div class="card-header-row">
+          <span class="reto-icon">{{ reto.icon }}</span>
+          <span class="badge-difficulty" [ngClass]="reto.difficulty.toLowerCase()">{{ reto.difficulty }}</span>
+        </div>
+        <h3 class="reto-title">{{ reto.title }}</h3>
+        <p class="reto-creator">Creado por <strong>{{ reto.creator }}</strong></p>
+        <span class="badge-category">{{ reto.category }}</span>
+        <p class="reto-desc">{{ reto.description }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <h2>EcoReto Campus</h2>
+      <div class="logo-circle">🌱</div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="active">🏠 Inicio</li>
+      <li>➕ Crear reto</li>
+      <li>🎁 Premios</li>
+      <li>🏆 Clasificación</li>
+      <li>👤 Mi perfil</li>
+      <li>❓ Soporte</li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <button class="btn-salir-side" (click)="logout()">Salir</button>
+    </div>
+  </div>
+
+</div>
